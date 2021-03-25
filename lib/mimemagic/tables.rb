@@ -26,7 +26,7 @@ class MimeMagic
         offset = offset.size == 2 ? offset[0]..offset[1] : offset[0]
         case type
         when 'string'
-          value.gsub!(/\\(x[\dA-Fa-f]{1,2}|0\d{1,3}|\d{1,3}|.)/) { eval("\"\\#{$1}\"") }
+          value.gsub!(/\\(x[\dA-Fa-f]{1,2}|0\d{1,3}|\d{1,3}|.)/) { if $1 == 'c' then 'c' else eval("\"\\#{$1}\"") end }
         when 'big16'
           value = str2int(value)
           value = ((value >> 8).chr + (value & 0xFF).chr)
